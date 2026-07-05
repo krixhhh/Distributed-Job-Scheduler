@@ -16,7 +16,7 @@ graph TD
     Backend <--> |BullMQ / ioredis| Redis[(Redis Queue / Cache)]
     Worker[Worker Node Process] <--> |Atomic Locking & Claim| Redis
     Worker <--> |Heartbeats & Telemetry| Database
-    Worker --> |Failure Diagnostic Prompts| DiagnosticsService[Diagnostics Service]
+    Worker --> |Logging Service| Notification Service]
     Worker --> |Alert Dispatches| Integrations[Slack / Discord / SMTP]
 ```
 
@@ -191,7 +191,7 @@ The database is pre-seeded with a default workspace and queue, allowing you to l
 ### Job Management
 * `GET /api/projects/:projectId/jobs` - List, search, and filter jobs
 * `POST /api/projects/:projectId/jobs` - Dispatch new job (immediate, delayed, or cron schedule)
-* `GET /api/jobs/:jobId` - Fetch detailed execution history, logs, and failure diagnostics
+* `GET /api/jobs/:jobId` - Fetch execution history and logs
 
 ### Workers & Telemetry
 * `GET /api/workers` - Get live worker node statuses and resource statistics
@@ -204,7 +204,7 @@ The database is pre-seeded with a default workspace and queue, allowing you to l
 ### Operations Dashboard
 A dark-mode analytics console providing visual tracking of active worker nodes, memory consumption, queue size, and detailed status logs.
 
-### Diagnostics Viewer
+### Execution Logs
 When a task fails (e.g. contains `"fail"` in payload), the diagnostics engine automatically analyzes the stack trace and presents actionable code suggestions.
 
 ---
