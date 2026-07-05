@@ -4,7 +4,7 @@ A distributed job scheduling application built using React, Node.js, TypeScript,
 
 ---
 
-## 🏗️ Architecture Overview
+##  Architecture Overview
 
 The system consists of three main services communicating over REST, Redis queues, and a database:
 
@@ -28,7 +28,7 @@ graph TD
 
 ---
 
-## 🌟 Key Features
+##  Key Features
 
 * **High-Throughput Queuing**: Powered by BullMQ and Redis for low-latency job processing.
 * **Clean Architecture**: Decoupled, maintainable, and type-safe backend server using Clean Architecture principles.
@@ -54,7 +54,7 @@ graph TD
 
 ---
 
-## 📂 Folder Structure
+## Folder Structure
 
 ```
 Distributed_Job_Scheduler/
@@ -90,7 +90,7 @@ Distributed_Job_Scheduler/
 
 ---
 
-## 🚀 Getting Started & Local Setup
+##  Getting Started & Local Setup
 
 ### Option A: Local Run (No Docker Required)
 
@@ -160,7 +160,7 @@ This boots:
 
 ---
 
-## 🔑 Seeded Test Credentials
+##  Seeded Test Credentials
 
 The database is pre-seeded with a default workspace and queue, allowing you to log in immediately:
 
@@ -199,7 +199,7 @@ The database is pre-seeded with a default workspace and queue, allowing you to l
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 ### Operations Dashboard
 A dark-mode analytics console providing visual tracking of active worker nodes, memory consumption, queue size, and detailed status logs.
@@ -217,7 +217,8 @@ When a task fails (e.g. contains `"fail"` in payload), the diagnostics engine au
 
 ---
 
-## 🔮 Future Improvements
+## <img width="2560" height="1432" alt="Screenshot 2026-07-05 135021" src="https://github.com/user-attachments/assets/f5cb7650-e748-49a5-8442-f8d255050345" />
+ Future Improvements
 
 * **Multi-tenant Role Based Access Control (RBAC)**: Support project-level invitation tokens with Read, Write, and Administrator roles.
 * **Distributed Locking (Redlock)**: Implement resilient distributed locking to ensure zero-duplicate processing across horizontally scaled worker networks.
