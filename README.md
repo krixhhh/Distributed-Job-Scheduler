@@ -1,6 +1,6 @@
 # Distributed Job Scheduler
 
-A production-grade, highly resilient, enterprise **Distributed Job Scheduler** built with Node.js Clean Architecture, TypeScript, Redis, BullMQ, Prisma, and SQLite/PostgreSQL. It features a modern glassmorphic dark-mode React 19 dashboard, automated failure diagnostics, sequential/parallel Directed Acyclic Graph (DAG) workflows, automatic worker recovery, and live telemetry tracking.
+A distributed job scheduling application built using React, Node.js, TypeScript, Prisma, Redis and SQLite. It allows users to create queues, schedule jobs, monitor workers and manage workflows through a modern web dashboard.
 
 ---
 
@@ -32,7 +32,7 @@ graph TD
 
 * **High-Throughput Queuing**: Powered by BullMQ and Redis for low-latency job processing.
 * **Clean Architecture**: Decoupled, maintainable, and type-safe backend server using Clean Architecture principles.
-* **Modern Developer Dashboard**: Glassmorphic, dark-mode visual interface built with React 19, Tailwind CSS, Recharts, and Framer Motion.
+* **Modern Developer Dashboard**:: Organized backend with reusable services and APIs.
 * **Failure Diagnostics**: Automatic runtime exception analysis, suggesting actionable markdown fixes for failing jobs directly on the dashboard.
 * **DAG Workflows**: Orchestrate sequential and parallel job execution pipelines via topological task sorting.
 * **Worker Monitor & Heartbeats**: Background worker nodes report CPU, memory, and active job metrics to the telemetry database.
@@ -45,7 +45,7 @@ graph TD
 * **Language**: TypeScript
 * **Runtime**: Node.js (v20+)
 * **Framework**: Express (Backend), React 19 (Frontend)
-* **Database**: SQLite (Local development), PostgreSQL (Production-ready)
+* **Database**: SQLite, PostgreSQL
 * **ORM**: Prisma Client
 * **Queue Broker**: Redis & BullMQ
 * **Styling**: Tailwind CSS
