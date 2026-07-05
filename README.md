@@ -189,26 +189,26 @@ This boots:
 
 ## Screenshots
 
-### Operations Dashboard
+### Login page
 
 <img width="2560" height="1437" alt="Screenshot 2026-07-05 134921" src="https://github.com/user-attachments/assets/0d9590ab-4f1b-47be-9925-cc2f30d12be6" />
 
-
+### Operations Dashboard
 <img width="2560" height="1432" alt="Screenshot 2026-07-05 135021" src="https://github.com/user-attachments/assets/f5cb7650-e748-49a5-8442-f8d255050345" />
 
-
+### Queues
 <img width="2560" height="1436" alt="Screenshot 2026-07-05 135028" src="https://github.com/user-attachments/assets/46e2a4a4-28fe-42d4-ad78-1f1bd0f1322c" />
 
-
+### Jobs & DLQ
 <img width="2560" height="1440" alt="Screenshot 2026-07-05 135044" src="https://github.com/user-attachments/assets/55748900-c8d7-413b-8648-0f5f066dfc20" />
 
-
+### Workflows (DAG)
 <img width="2560" height="1417" alt="Screenshot 2026-07-05 135051" src="https://github.com/user-attachments/assets/8e92e344-6cce-465a-9cc1-2d848a01fc8d" />
 
-
+### Workers
 <img width="2560" height="1440" alt="Screenshot 2026-07-05 135057" src="https://github.com/user-attachments/assets/a375cc5a-f0ec-4261-9836-a865e9ef577c" />
 
-
+### Settings
 <img width="2560" height="1440" alt="Screenshot 2026-07-05 135105" src="https://github.com/user-attachments/assets/2e01d65d-6570-4ef7-a92b-6958d51c4127" />
 
 
