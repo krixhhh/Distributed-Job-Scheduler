@@ -1,3 +1,4 @@
+<img width="2554" height="1440" alt="Screenshot 2026-07-05 134957" src="https://github.com/user-attachments/assets/3920b361-ac14-4762-a38e-af25db2c2b1b" />
 # Distributed Job Scheduler
 
 A distributed job scheduling application built using React, Node.js, TypeScript, Prisma, Redis and SQLite. It allows users to create queues, schedule jobs, monitor workers and manage workflows through a modern web dashboard.
