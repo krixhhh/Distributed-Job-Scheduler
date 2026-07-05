@@ -4,23 +4,23 @@ A distributed job scheduling application built using React, Node.js, TypeScript,
 
 ---
 
-## 🌟 Key Features
+##  Key Features
 
 * **High-Throughput Queuing**: Powered by BullMQ and Redis for low-latency job processing.
-* **Clean Architecture**: Decoupled, maintainable, and type-safe backend server using Clean Architecture principles.
-* **Modern Developer Dashboard**: Glassmorphic, dark-mode visual interface built with React 19, Tailwind CSS, Recharts, and Framer Motion.
+* **Clean Architecture**: Organized backend with reusable services and APIs.
+* **Modern Developer Dashboard**: Built with React, Tailwind CSS, Recharts and Framer Motion.
 * **DAG Workflows**: Orchestrate sequential and parallel job execution pipelines via topological task sorting.
 * **Worker Monitor & Heartbeats**: Background worker nodes report CPU, memory, and active job metrics to the telemetry database.
 * **Dead Letter Queue (DLQ)**: Failed tasks after maximum retries are forwarded to a DLQ database record for analysis.
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 * **Language**: TypeScript
 * **Runtime**: Node.js (v20+)
 * **Framework**: Express (Backend), React 19 (Frontend)
-* **Database**: SQLite (Local development), PostgreSQL (Production-ready)
+* **Database**: SQLite, PostgreSQL
 * **ORM**: Prisma Client
 * **Queue Broker**: Redis & BullMQ
 * **Styling**: Tailwind CSS
