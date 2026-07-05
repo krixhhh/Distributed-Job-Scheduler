@@ -249,10 +249,7 @@ export class JobProcessor {
           },
         });
 
-        // Trigger AI failure analysis via Gemini API
-        await this.logToExecution(executionRecord.id, "Exhausted all retry attempts. Commencing Gemini AI Failure Analysis...", "WARN");
-        const suggestions = await GeminiService.analyzeFailure(job.name, job.payload, errorMsg);
-
+        
         // Save DLQ record
         await prisma.deadLetterQueue.create({
           data: {
