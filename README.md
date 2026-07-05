@@ -1,4 +1,3 @@
-<img width="2554" height="1440" alt="Screenshot 2026-07-05 134957" src="https://github.com/user-attachments/assets/3920b361-ac14-4762-a38e-af25db2c2b1b" />
 # Distributed Job Scheduler
 
 A distributed job scheduling application built using React, Node.js, TypeScript, Prisma, Redis and SQLite. It allows users to create queues, schedule jobs, monitor workers and manage workflows through a modern web dashboard.
@@ -202,13 +201,14 @@ The database is pre-seeded with a default workspace and queue, allowing you to l
 ## Screenshots
 
 ### Operations Dashboard
-A dark-mode analytics console providing visual tracking of active worker nodes, memory consumption, queue size, and detailed status logs.
 
-## <img width="2560" height="1432" alt="Screenshot 2026-07-05 135021" src="https://github.com/user-attachments/assets/f5cb7650-e748-49a5-8442-f8d255050345" />
+<img width="2560" height="1437" alt="Screenshot 2026-07-05 134921" src="https://github.com/user-attachments/assets/0d9590ab-4f1b-47be-9925-cc2f30d12be6" />
+
+
+
+## <img width="2560" height="1432" alt="Screenshot 2026-07-05 135021" src="https://github.com/user-attachments/assets/f5cb7650-e748-49a5-8442-f8d255050345" /><img width="2560" height="1436" alt="Screenshot 2026-07-05 135028" src="https://github.com/user-attachments/assets/46e2a4a4-28fe-42d4-ad78-1f1bd0f1322c" />
+
  Future Improvements
-
-### Execution Logs
-When a task fails (e.g. contains `"fail"` in payload), the diagnostics engine automatically analyzes the stack trace and presents actionable code suggestions.
 
 ---
 
