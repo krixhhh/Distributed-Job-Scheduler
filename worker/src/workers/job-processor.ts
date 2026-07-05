@@ -1,4 +1,4 @@
-import { Worker as BullWorker, Queue as BullQueue } from "bullmq";
+2import { Worker as BullWorker, Queue as BullQueue } from "bullmq";
 import { prisma } from "../config/prisma.js";
 import { redisConfig } from "../config/redis.js";
 import { logger } from "../logger/index.js";
