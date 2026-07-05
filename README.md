@@ -49,7 +49,7 @@ graph TD
 * **Queue Broker**: Redis & BullMQ
 * **Styling**: Tailwind CSS
 * **Build Tool**: Vite (Frontend), TSC (Backend/Worker/Shared)
-* **Diagnostics Engine**: Automated Diagnostics API
+* **Monitoring**: Worker Telemetry & Logs
 
 ---
 
@@ -156,19 +156,8 @@ This boots:
 3. **Backend API** (Exposed on `http://localhost:4000`)
 4. **Worker Node** (Auto-restarts when Postgres/Redis are ready)
 5. **Frontend Dashboard** (Served through Nginx proxy on `http://localhost` / Port `80`)
-
----
-
-##  Seeded Test Credentials
-
-The database is pre-seeded with a default workspace and queue, allowing you to log in immediately:
-
 * **Email**: `admin@scheduler.com`
 * **Password**: `AdminPassword123!`
-* **Seeded Organization**: `Default Organization`
-* **Seeded Project**: `Default Project`
-* **Seeded Queue**: `default-queue` (active)
-
 ---
 
 ##  API Endpoints
@@ -233,7 +222,7 @@ The database is pre-seeded with a default workspace and queue, allowing you to l
 
 1. **Local SQLite Connection**: While the production target utilizes a containerized PostgreSQL database, local development defaults to SQLite to guarantee instantaneous, manual-free startup.
 2. **NodeNext Resolution**: Import statements contain `.js` file extensions in compliance with TypeScript `NodeNext` ESM module resolution.
-3. **Diagnostics API Configuration**: If the diagnostics API key is omitted, the worker handles failure scenarios seamlessly but skips diagnostics explanation suggestions.
+3. **Optional External API Configuration**: If the diagnostics API key is omitted, the worker handles failure scenarios seamlessly but skips diagnostics explanation suggestions.
 
 ---
 
