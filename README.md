@@ -26,5 +26,3 @@ A distributed job scheduling application built using React, Node.js, TypeScript,
 * **Styling**: Tailwind CSS
 * **Build Tool**: Vite (Frontend), TSC (Backend/Worker/Shared)
 
----
-
