@@ -39,7 +39,7 @@ graph TD
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 * **Language**: TypeScript
 * **Runtime**: Node.js (v20+)
@@ -171,7 +171,7 @@ The database is pre-seeded with a default workspace and queue, allowing you to l
 
 ---
 
-## 🔌 API Endpoints
+##  API Endpoints
 
 ### Authentication
 * `POST /api/auth/register` - Create user and organization
@@ -208,7 +208,7 @@ When a task fails (e.g. contains `"fail"` in payload), the diagnostics engine au
 
 ---
 
-## 📝 Assumptions
+##  Assumptions
 
 1. **Local SQLite Connection**: While the production target utilizes a containerized PostgreSQL database, local development defaults to SQLite to guarantee instantaneous, manual-free startup.
 2. **NodeNext Resolution**: Import statements contain `.js` file extensions in compliance with TypeScript `NodeNext` ESM module resolution.
