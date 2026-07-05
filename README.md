@@ -203,6 +203,9 @@ The database is pre-seeded with a default workspace and queue, allowing you to l
 ### Operations Dashboard
 A dark-mode analytics console providing visual tracking of active worker nodes, memory consumption, queue size, and detailed status logs.
 
+## <img width="2560" height="1432" alt="Screenshot 2026-07-05 135021" src="https://github.com/user-attachments/assets/f5cb7650-e748-49a5-8442-f8d255050345" />
+ Future Improvements
+
 ### Execution Logs
 When a task fails (e.g. contains `"fail"` in payload), the diagnostics engine automatically analyzes the stack trace and presents actionable code suggestions.
 
@@ -216,8 +219,6 @@ When a task fails (e.g. contains `"fail"` in payload), the diagnostics engine au
 
 ---
 
-## <img width="2560" height="1432" alt="Screenshot 2026-07-05 135021" src="https://github.com/user-attachments/assets/f5cb7650-e748-49a5-8442-f8d255050345" />
- Future Improvements
 
 * **Multi-tenant Role Based Access Control (RBAC)**: Support project-level invitation tokens with Read, Write, and Administrator roles.
 * **Distributed Locking (Redlock)**: Implement resilient distributed locking to ensure zero-duplicate processing across horizontally scaled worker networks.
