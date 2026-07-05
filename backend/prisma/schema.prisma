@@ -1,0 +1,258 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                 String               @id @default(uuid())
+  email              String               @unique
+  passwordHash       String
+  name               String
+  isVerified         Boolean              @default(false)
+  verificationToken  String?
+  resetToken         String?
+  resetTokenExpires  DateTime?
+  refreshToken       String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  memberships        OrganizationMember[]
+  projectMemberships ProjectMember[]
+  auditLogs          AuditLog[]
+
+  @@index([email])
+}
+
+model Organization {
+  id        String               @id @default(uuid())
+  name      String
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+  members   OrganizationMember[]
+  projects  Project[]
+}
+
+model OrganizationMember {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role           String // OWNER, ADMIN, MEMBER
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([organizationId, userId])
+}
+
+model Project {
+  id             String          @id @default(uuid())
+  name           String
+  description    String?
+  organizationId String
+  organization   Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  members        ProjectMember[]
+  queues         Queue[]
+  workflows      Workflow[]
+  notifications  Notification[]
+  apiKeys        ApiKey[]
+  auditLogs      AuditLog[]
+}
+
+model ProjectMember {
+  id        String   @id @default(uuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      String // ADMIN, MEMBER
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([projectId, userId])
+}
+
+model ApiKey {
+  id        String    @id @default(uuid())
+  key       String    @unique
+  name      String
+  projectId String
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  scope     String // READ, WRITE, ADMIN
+  expiresAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([key])
+}
+
+model Queue {
+  id            String       @id @default(uuid())
+  name          String
+  description   String?
+  projectId     String
+  project       Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  priority      Int          @default(5)
+  concurrency   Int          @default(5)
+  rateLimit     Int? // max jobs per second
+  maxAttempts   Int          @default(3)
+  timeout       Int          @default(30000) // timeout in ms
+  retryPolicyId String?      @unique
+  retryPolicy   RetryPolicy? @relation(fields: [retryPolicyId], references: [id], onDelete: SetNull)
+  status        String       @default("ACTIVE") // ACTIVE, PAUSED
+  jobs          Job[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@unique([projectId, name])
+}
+
+model RetryPolicy {
+  id          String   @id @default(uuid())
+  strategy    String // FIXED, LINEAR, EXPONENTIAL
+  delay       Int // in ms
+  maxAttempts Int
+  queue       Queue?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Job {
+  id             String            @id @default(uuid())
+  queueId        String
+  queue          Queue             @relation(fields: [queueId], references: [id], onDelete: Cascade)
+  name           String
+  type           String // IMMEDIATE, DELAYED, SCHEDULED, CRON, RECURRING
+  status         String            @default("QUEUED") // QUEUED, SCHEDULED, CLAIMED, RUNNING, COMPLETED, FAILED, RETRYING, DLQ
+  payload        String            @default("{}") // JSON string
+  result         String? // JSON string
+  error          String? // JSON string
+  attempts       Int               @default(0)
+  maxAttempts    Int
+  timeout        Int
+  cronExpression String?
+  runAt          DateTime?
+  lockedBy       String? // Worker name / id holding the lock
+  lockedAt       DateTime?
+  parentJobId    String?
+  parentJob      Job?              @relation("JobDependencies", fields: [parentJobId], references: [id], onDelete: SetNull)
+  dependentJobs  Job[]             @relation("JobDependencies")
+  workflowId     String?
+  workflow       Workflow?         @relation(fields: [workflowId], references: [id], onDelete: SetNull)
+  executions     JobExecution[]
+  dlqRecord      DeadLetterQueue?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  @@index([status])
+  @@index([queueId])
+  @@index([workflowId])
+}
+
+model Workflow {
+  id        String   @id @default(uuid())
+  name      String
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  structure String // JSON string defining nodes & edges
+  status    String   @default("ACTIVE") // ACTIVE, INACTIVE
+  jobs      Job[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Worker {
+  id            String            @id @default(uuid())
+  name          String
+  ipAddress     String?
+  hostname      String?
+  status        String            @default("ACTIVE") // ACTIVE, INACTIVE, DRAINING
+  concurrency   Int               @default(5)
+  lastHeartbeat DateTime          @default(now())
+  startedAt     DateTime          @default(now())
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  heartbeats    WorkerHeartbeat[]
+  executions    JobExecution[]
+
+  @@index([status])
+}
+
+model WorkerHeartbeat {
+  id               String   @id @default(uuid())
+  workerId         String
+  worker           Worker   @relation(fields: [workerId], references: [id], onDelete: Cascade)
+  cpuUsage         Float
+  memoryUsage      Float
+  activeJobsCount  Int
+  createdAt        DateTime @default(now())
+
+  @@index([workerId])
+}
+
+model JobExecution {
+  id           String         @id @default(uuid())
+  jobId        String
+  job          Job            @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  workerId     String?
+  worker       Worker?        @relation(fields: [workerId], references: [id], onDelete: SetNull)
+  status       String // RUNNING, COMPLETED, FAILED
+  attempt      Int
+  startedAt    DateTime       @default(now())
+  completedAt  DateTime?
+  errorReason  String?
+  suggestion   String? // Gemini failure explanation
+  logs         ExecutionLog[]
+  createdAt    DateTime       @default(now())
+
+  @@index([jobId])
+}
+
+model ExecutionLog {
+  id             String       @id @default(uuid())
+  jobExecutionId String
+  execution      JobExecution @relation(fields: [jobExecutionId], references: [id], onDelete: Cascade)
+  message        String
+  logLevel       String       @default("INFO") // INFO, WARN, ERROR
+  createdAt      DateTime     @default(now())
+
+  @@index([jobExecutionId])
+}
+
+model DeadLetterQueue {
+  id                   String    @id @default(uuid())
+  jobId                String    @unique
+  job                  Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  reason               String?
+  failedAt             DateTime  @default(now())
+  suggestions          String?
+  suggestionsUpdatedAt DateTime?
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  type      String // EMAIL, SLACK, DISCORD
+  config    String // JSON string configuration
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  action    String
+  entity    String
+  entityId  String?
+  details   String? // JSON string details
+  createdAt DateTime @default(now())
+}

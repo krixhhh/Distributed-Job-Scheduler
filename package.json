@@ -1,0 +1,17 @@
+{
+  "name": "distributed-job-scheduler-root",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "shared",
+    "backend",
+    "worker",
+    "frontend"
+  ],
+  "scripts": {
+    "build:shared": "npm run build -w shared",
+    "dev:backend": "npm run dev -w backend",
+    "dev:worker": "npm run dev -w worker",
+    "dev:frontend": "npm run dev -w frontend"
+  }
+}

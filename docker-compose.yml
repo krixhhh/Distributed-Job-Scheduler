@@ -1,0 +1,85 @@
+version: "3.8"
+
+services:
+  # 1. PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: djs-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: scheduler_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. Redis Cache & Messaging Queue Broker
+  redis:
+    image: redis:7-alpine
+    container_name: djs-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # 3. Clean Architecture Backend REST API Server
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: djs-backend
+    restart: always
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/scheduler_db?schema=public
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=super-secret-jwt-key-change-in-production
+      - JWT_REFRESH_SECRET=super-secret-refresh-key-change-in-production
+      - FRONTEND_URL=http://localhost
+      - GEMINI_API_KEY=
+    depends_on:
+      - postgres
+      - redis
+    command: >
+      sh -c "until nc -z postgres 5432; do echo 'Waiting for postgres...'; sleep 1; done; npx prisma generate --schema=backend/prisma/schema.prisma && npx prisma db push --schema=backend/prisma/schema.prisma && npx prisma db seed --schema=backend/prisma/schema.prisma && node backend/dist/server.js"
+
+  # 4. Background Processor Worker Node
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    container_name: djs-worker
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/scheduler_db?schema=public
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - WORKER_CONCURRENCY=10
+      - GEMINI_API_KEY=
+    depends_on:
+      - postgres
+      - redis
+
+  # 5. Frontend React Dashboard Application
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: djs-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  redis_data:
