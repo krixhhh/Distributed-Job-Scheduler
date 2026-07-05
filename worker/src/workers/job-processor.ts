@@ -261,12 +261,12 @@ export class JobProcessor {
         // Save analysis to execution output
         await prisma.jobExecution.update({
           where: { id: executionRecord.id },
-          data: { suggestion: suggestions },
+          data: { },
         });
 
         // Dispatch Slack/Discord notifications alerts
         const subject = `CRITICAL: Job Failure Alert - ${job.name}`;
-        const message = `Job ID: ${job.id}\nQueue: ${job.queue.name}\nAttempts: ${currentAttempt}/${job.maxAttempts}\nReason: ${errorMsg}\n\nAI Diagnostic Suggestion:\n${suggestions}`;
+        const message = `Job ID: ${job.id}\nQueue: ${job.queue.name}\nAttempts: ${currentAttempt}/${job.maxAttempts}\nReason: ${errorMsg}`;
         await NotificationService.dispatchProjectAlert(job.queue.projectId, subject, message);
 
         await this.logToExecution(executionRecord.id, "Job moved to DLQ. Alerts successfully dispatched.", "ERROR");
