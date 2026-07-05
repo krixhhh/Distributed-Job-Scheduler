@@ -16,7 +16,6 @@ graph TD
     Backend <--> |BullMQ / ioredis| Redis[(Redis Queue / Cache)]
     Worker[Worker Node Process] <--> |Atomic Locking & Claim| Redis
     Worker <--> |Heartbeats & Telemetry| Database
-    Worker --> |Logging Service |
     Worker --> |Alert Dispatches| Integrations[Slack / Discord / SMTP]
 ```
 
