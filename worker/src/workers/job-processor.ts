@@ -266,7 +266,10 @@ export class JobProcessor {
 
         // Dispatch Slack/Discord notifications alerts
         const subject = `CRITICAL: Job Failure Alert - ${job.name}`;
-        const message = `Job ID: ${job.id}\nQueue: ${job.queue.name}\nAttempts: ${currentAttempt}/${job.maxAttempts}\nReason: ${errorMsg}`;
+   const message = `Job ID: ${job.id}
+Queue: ${job.queue.name}
+Attempts: ${currentAttempt}/${job.maxAttempts}
+Reason: ${errorMsg}`;
         await NotificationService.dispatchProjectAlert(job.queue.projectId, subject, message);
 
         await this.logToExecution(executionRecord.id, "Job moved to DLQ. Alerts successfully dispatched.", "ERROR");
