@@ -3,7 +3,6 @@ import { prisma } from "../config/prisma.js";
 import { redisConfig } from "../config/redis.js";
 import { logger } from "../logger/index.js";
 import { DistributedLock } from "./distributed-lock.js";
-import { GeminiService } from "../services/gemini.service.js";
 import { NotificationService } from "../services/notification.service.js";
 import { WorkerMonitor } from "./worker-monitor.js";
 import { JobStatus, RetryStrategy, NotificationType } from "shared";
