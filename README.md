@@ -215,7 +215,16 @@ This boots:
 
 
  Future Improvements
-
+- Add Role-Based Access Control (RBAC) for Admin, Manager, and Viewer roles.
+- Support distributed worker auto-scaling for high-volume job processing.
+- Add Webhook integrations to notify external applications when jobs complete or fail.
+- Implement real-time notifications using WebSockets.
+- Add advanced job scheduling options such as recurring (Cron) jobs and calendar-based scheduling.
+- Improve monitoring with Grafana and Prometheus integration.
+- Add email and Slack notifications for critical job failures.
+- Provide analytics dashboards with historical job execution reports.
+- Support multi-tenant workspaces for multiple organizations.
+- Add unit tests, integration tests, and CI/CD pipeline using GitHub Actions
 ---
 
 ##  Assumptions
