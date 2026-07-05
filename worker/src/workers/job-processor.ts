@@ -1,4 +1,4 @@
-2import { Worker as BullWorker, Queue as BullQueue } from "bullmq";
+import { Worker as BullWorker, Queue as BullQueue } from "bullmq";
 import { prisma } from "../config/prisma.js";
 import { redisConfig } from "../config/redis.js";
 import { logger } from "../logger/index.js";
@@ -255,8 +255,6 @@ export class JobProcessor {
           data: {
             jobId: job.id,
             reason: errorMsg,
-            suggestions,
-            suggestionsUpdatedAt: new Date(),
           },
         });
 
